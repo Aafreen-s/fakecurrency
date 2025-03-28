@@ -1,3 +1,16 @@
+import joblib
+import streamlit as st
+import os
+
+# Load the model
+@st.cache_resource
+def load_model():
+    return joblib.load("fake_currency_model.pkl")  # Ensure the filename matches exactly
+
+clf = load_model()
+st.success("Model Loaded Successfully! ✅")
+
+
 import streamlit as st
 import pandas as pd
 import joblib  # For loading the trained model

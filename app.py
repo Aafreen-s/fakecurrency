@@ -7,7 +7,7 @@ from fpdf import FPDF
 model = joblib.load("fake_currency_model_balanced.pkl")  # Ensure you have saved your model
 
 # Load dataset
-df = pd.read_csv("bank_notes.csv")
+df = pd.read_csv("bank_notes.csv", index_col=0)
 
 def classify_note(variance, skewness, curtosis, entropy):
     input_data = [[variance, skewness, curtosis, entropy]]
@@ -36,7 +36,7 @@ st.title("Fake Currency Detection System")
 serial_number = st.number_input("Enter Serial Number (Row Index in Dataset):", min_value=0, max_value=len(df)-1, step=1)
 
 if st.button("Check Note"):
-    row = df.iloc[int(serial_number)]
+    row = df.iloc[int(serial_number) - 1]  # Adjusting to match actual Serial Number
     variance, skewness, curtosis, entropy = row["variance"], row["skewness"], row["curtosis"], row["entropy"]
     result = classify_note(variance, skewness, curtosis, entropy)
     
